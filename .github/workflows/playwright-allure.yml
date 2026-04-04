@@ -1,0 +1,52 @@
+name: Playwright Tests & Allure Report
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: |
+          cd playwright-tests
+          npm install
+
+      - name: Install Playwright browsers
+        run: |
+          cd playwright-tests
+          npx playwright install --with-deps
+
+      - name: Run Playwright tests
+        run: |
+          cd playwright-tests
+          npx playwright test
+
+      - name: Upload Allure results
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: playwright-tests/allure-results
+
+      - name: Generate Allure report
+        run: |
+          npm install -g allure-commandline
+          allure generate playwright-tests/allure-results --clean -o allure-report
+
+      - name: Upload Allure report
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-report
