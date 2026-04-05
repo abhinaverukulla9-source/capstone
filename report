@@ -1,0 +1,345 @@
+# FindIt – Lost & Found Hub
+
+## Title Page
+
+**Project Name:** FindIt – Lost & Found Hub  
+**Project Type:** Full-Stack Web Application with QE and Automation Coverage  
+**Stack:** Frontend: HTML/CSS/JavaScript; Backend: Node.js + Express + MySQL; Automation: Selenium, Playwright, Cypress  
+**Prepared by:** [Your Name]  
+**Date:** April 6, 2026  
+**Version:** 1.0
+
+---
+
+## Overview
+
+FindIt is a full-stack reference application designed to make lost-and-found item reporting simple, reliable, and secure. The platform enables users to register and log in, report lost or found items, search and browse listings, view item details, and contact owners without exposing sensitive owner data.
+
+The project combines a responsive frontend with a Node.js/Express backend, a MySQL database, and a strong quality engineering practice supported by STLC documents, automation suites, and reporting tools.
+
+![FindIt Homepage](report-images/findit-homepage.png)
+
+---
+
+## Goals
+
+- Deliver a fully functional lost-and-found platform with secure user management.
+- Provide a stable, testable application with clear automation and manual testing coverage.
+- Validate core business workflows such as registration, authentication, item reporting, search, and owner communication.
+- Demonstrate good engineering practices, including code quality, security, accessibility, and performance.
+- Produce a comprehensive report and supporting artifacts for academic or portfolio use.
+
+---
+
+## Specifications
+
+### Functional Specifications
+
+- User registration with email, password, and validation.
+- User login with JWT-based authentication.
+- User dashboard displaying owned lost and found listings.
+- Lost item reporting flow with required fields: title, description, category, location, date.
+- Found item reporting flow with similar required fields.
+- Search and browse functionality with type filters and pagination.
+- Item detail pages with contact owner capabilities.
+- Update and delete operations restricted to item owners.
+- Backend API route security with JWT protection and proper authorization.
+
+### Non-Functional Specifications
+
+- Page load and API response performance targets.
+- Responsive UI for desktop and mobile devices.
+- Accessibility compliance for keyboard navigation and form labels.
+- Security protection via prepared statements, JWT auth, and input validation.
+- Maintainability through consistent code standards and modular structure.
+
+---
+
+# Milestone 1 - Analysis and Planning
+
+## 1.1 Introduction
+
+The first milestone established project purpose, scope, and quality expectations. It set the foundation for both development and testing by defining essential features, dependencies, user journeys, and traceability between requirements and validation.
+
+### Project Purpose
+
+FindIt is built to help users report lost and found items in a single centralized application. The product aims to reduce friction in reconnecting items with owners while ensuring data integrity and secure communication.
+
+### Planning Outcomes
+
+- Identified core modules and user flows.
+- Selected technology stack and testing tools.
+- Defined quality assurance strategy and artifacts.
+- Mapped risk areas for priority testing.
+
+---
+
+## 1.2 Requirements analysis
+
+### 1.2.1 Functional Requirements (FRS)
+
+| Module | Requirement Description | Priority |
+|---|---|---|
+| Registration | User registration with email, password, and validation | High |
+| Authentication | User login with JWT-based authentication | High |
+| Dashboard | Dashboard showing user’s items | Medium |
+| Lost Item | Report lost item flow with title, description, category, location, date | High |
+| Found Item | Report found item flow with title, description, category, location, date | High |
+| Search & Browse | Search and browse items with type filters and pagination | Medium |
+| Item Details | Item detail pages with contact owner functionality | Medium |
+| Item Management | Update and delete item operations only for the owner | High |
+| API Security | API endpoints secured appropriately | High |
+
+### 1.2.3 Non-Functional Requirements (NFRS)
+
+| Category | Description | Priority |
+|---|---|---|
+| Performance | App should respond quickly and remain responsive under normal load | High |
+| Security | Protected routes, JWT authentication, prepared queries, and safe error handling | High |
+| Usability | Responsive UI with intuitive workflows and clear validation feedback | Medium |
+| Accessibility | Keyboard operability, labels, and sufficient contrast for major screens | Medium |
+| Maintainability | Well-structured code and documentation for future enhancements | Medium |
+
+---
+
+## 1.3 Test strategy
+
+### 1.3.1 Manual testing scope
+
+The manual testing effort focuses on usability, exploratory validation, and scenarios that require human judgment.
+
+- End-to-end exploration of registration, login, dashboard, report item, search, and contact flows.
+- Usability testing of navigation, forms, and responsive layouts.
+- Accessibility validation for keyboard use and screen-reader-friendly UI.
+- Regression checks after major feature or bug fixes.
+
+### 1.3.2 Automated testing scope
+
+Automation is used for repeatable, high-risk, and regression-critical workflows.
+
+- Selenium: Browser-based regression for login and authentication flows.
+- Playwright: End-to-end UI coverage for registration, reporting, search, dashboard, and item details.
+- Cypress: API contract and backend behavior verification.
+- Database validation: SQL-based checks for data persistence and ownership enforcement.
+
+---
+
+## 1.4 Requirements Traceability Matrix (RTM) Structure
+
+| Requirement_Summary | Test_scenario |
+|---|---|
+| User registration with email, password, and validation | Validate registration form accepts valid email/password, rejects invalid entries, and stores new user |
+| User login with JWT-based authentication | Verify login returns JWT token for valid credentials and blocks invalid login attempts |
+| Dashboard showing user’s items | Confirm authenticated user dashboard displays their lost/found items |
+| Report lost item flow with title, description, category, location, date | Test lost-item form submission with required fields and successful record creation |
+| Report found item flow with title, description, category, location, date | Test found-item form submission with required fields and successful record creation |
+| Search and browse items with type filters and pagination | Validate search results update by type filter and pagination controls |
+| Item detail pages with contact owner functionality | Ensure item detail page loads and contact owner request works for non-owner |
+| Update and delete item operations only for the owner | Verify only item owner can edit/delete item; other users are blocked |
+| API endpoints secured appropriately | Test protected API routes require valid JWT and reject unauthorized access |
+
+---
+
+# Milestone 2 - Static Testing + Manual Testing
+
+## 2.1 Static Testing (Review, Inspections & Code Quality Improvements)
+
+### 2.1.1 Frontend Code Optimization
+
+This review analyzed the frontend for redundant styles, unused scripts, and opportunities to improve load speed. It also ensured CSS and JavaScript were structured for maintainability and automation support.
+
+### 2.1.2 Improved HTML Structure & Semantic Layout
+
+The HTML structure was reviewed for proper semantics. Page sections, forms, and buttons were verified to use accessible markup and enhance screen-reader compatibility.
+
+### 2.1.3 Code Cleanup & Component Standardization
+
+Code cleanup included harmonizing element IDs, removing console debugging code, and standardizing form validation components. These changes reduce maintenance overhead and improve test stability.
+
+### 2.1.4 Item Reporting & Search Flow Refactoring
+
+Rather than payment-related items, this project uses lost/found reporting and search refinement. The flow was improved to make item submission and filtering more intuitive, with better field validation and state handling.
+
+### 2.1.5 SEO Enhancements
+
+SEO improvements included descriptive page titles, meta descriptions, and proper heading hierarchy. These changes also support a more polished user presentation.
+
+---
+
+## 2.2 Manual Testing Activities
+
+### 2.2.1 Functional Manual Tests Performed
+
+Functional manual tests covered: 
+
+- Registration and validation behavior.  
+- Login and JWT authentication flow.  
+- Dashboard item visibility and ownership checks.  
+- Lost item reporting and found item reporting.  
+- Search with type filters and pagination.  
+- Item detail view and contact owner workflow.  
+- Update/delete restrictions for item owners.
+
+### 2.2.2 Usability & UI/UX Testing
+
+Usability testing validated that the application is easy to navigate and visually coherent. It included checks for responsive behavior on smaller screens and consistency of the main navigation menu.
+
+### 2.2.3 Accessibility Testing (A11Y)
+
+Accessibility validation included keyboard tab order, label associations, focus visibility, and basic contrast checks. A11Y issues were tracked and fixed where applicable.
+
+---
+
+## 2.3 Defects Identified & Fixed
+
+| Defect | Description | Severity | Resolution |
+|---|---|---|---|
+| Invalid registration input | Email validation allowed malformed values | High | Added stricter client-side and server-side validation |
+| Dashboard ownership issue | User could view items that did not belong to them | Critical | Enforced user filter on dashboard data |
+| Search pagination error | Page 0 returned invalid results | Medium | Clamped page values and improved query handling |
+| Contact owner self-message | User could contact themselves | Medium | Added owner check before sending contact requests |
+
+---
+
+## 2.4 Lighthouse Performance Report
+
+The application was audited with Lighthouse, yielding strong scores in performance, accessibility, best practices, and SEO.
+
+![Lighthouse Report](report-images/lighthouse-report.png)
+
+### Lighthouse Summary
+
+- Performance: 100  
+- Accessibility: 95  
+- Best Practices: 100  
+- SEO: 90
+
+Key improvements included asset optimization, reduced rendering time, and improved mobile-first markup.
+
+---
+
+# Milestone 3 - Selenium + Playwright Testing (Frontend)
+
+## 3.1 Setting up Base Test
+
+A stable automation foundation was configured for UI tests. The base test setup includes reusable page objects, shared setup/teardown fixtures, and consistent environment variables.
+
+In Selenium, the login suite is implemented with page objects and WebDriver management. In Playwright, the configuration supports multiple browsers and device emulation.
+
+![Allure Report](report-images/allure-report.png)
+
+## 3.2 Test Designing according to expected outcomes
+
+Test cases were designed to match business expectations:
+
+- Successful registration and login flows.
+- Item reporting and validation.
+- Search and filter accuracy.
+- Protected access for dashboard and contact actions.
+
+## 3.3 Test Design Methodology
+
+The methodology followed risk-based prioritization and boundary analysis:
+
+- Equivalence partitioning for inputs like email, password, and item title.
+- Boundary conditions for pagination and field length.
+- Positive and negative scenarios for authentication and CRUD operations.
+
+## 3.4 Test Cases
+
+Representative test cases include:
+
+- `TC-REG-06`: Validate successful registration with valid credentials.
+- `TC-LOGIN-02`: Verify successful login returns a JWT token.
+- `TC-RL-06`: Confirm lost item reports create database records.
+- `TC-SRCH-03`: Ensure search filters return expected results.
+- `TC-ID-09`: Verify contact owner rejects invalid message content.
+
+---
+
+# Milestone 4 - Database Connection + Testing
+
+## 4.1 Database Addition and Setup
+
+The MySQL database schema supports users, lost items, found items, and contact records. The backend uses `mysql2` with prepared statements to prevent SQL injection and ensure query safety.
+
+Setup options:
+
+- `docker compose up -d` to bring up MySQL and the app.
+- Local MySQL with `database/schema.sql` imported.
+- `npm run seed` for demo users and sample items.
+
+## 4.2 Test Cases
+
+Database test cases verify:
+
+- Data persistence for registered users and reports.
+- Ownership constraints for item updates and deletes.
+- Correct item counts for search and dashboard queries.
+- Protection against invalid SQL inputs.
+
+## 4.3 Test Results
+
+The results from the database and automation suites show successful execution across the core workflows. The database layer accepted valid records and rejected invalid or unauthorized operations.
+
+---
+
+# Milestone 5 - Allure Reports - Module Wise
+
+## 5.0 Test Suites Based on Modules
+
+The automation coverage is organized by module:
+
+- Authentication and login
+- Registration
+- Lost item reporting
+- Found item reporting
+- Search and browse
+- Item details and contact
+- API contract and security
+
+## Throughput
+
+The combined automation execution produced strong throughput across multiple frameworks. The current project includes over 210 successful test cases with passing status across Selenium, Playwright, and Cypress.
+
+![Playwright Results](report-images/playwright-results.png)
+
+---
+
+# Appendices
+
+## Appendix A: Full Test Case Catalog
+
+Detailed test case lists are available in `reports/stlc/03-test-scenarios-and-cases.md`.
+
+## Appendix B: Database Schema
+
+The database schema is defined in `database/schema.sql` and supports all core application entities.
+
+## Appendix C: Automation Commands
+
+Example commands to run the suites:
+
+- Selenium login tests:
+  `cd selenium-tests && mvn -Dfindit.baseUrl=http://localhost:3000 clean test`
+- Playwright tests:
+  `cd playwright-tests && npm install && npx playwright test`
+- Cypress API tests:
+  `cd cypress-api-tests && npm install && npx cypress run`
+
+## Appendix D: Defect Lifecycle
+
+Defect tracking includes issue identification, severity classification, resolution steps, and verification after fix.
+
+---
+
+## Notes
+
+To include the screenshots, add the following files into the `report-images/` folder:
+
+- `findit-homepage.png`
+- `allure-report.png`
+- `lighthouse-report.png`
+- `playwright-results.png`
+
+If you want, I can also create a PDF-ready version of this same report in a separate file.
