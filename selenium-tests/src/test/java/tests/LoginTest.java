@@ -9,11 +9,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.LoginPage;
 import utils.DriverManager;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Duration;
 
 @ExtendWith(AllureJunit5.class)
 class LoginTest {
@@ -65,11 +67,14 @@ class LoginTest {
 
     @Test
     void TC_LOGIN_02_invalidPasswordShowsError() {
-        var page = new LoginPage();
-        page.open();
-        page.loginAs(DEMO_USER, "WrongPass!!!", false);
-        Assertions.assertTrue(page.isGlobalErrorVisible());
-    }
+    var page = new LoginPage();
+    page.open();
+    page.loginAs(DEMO_USER, "WrongPass!!!", true);  // or false, doesn't matter
+    // Add wait for error to appear
+    WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(5));
+    wait.until(driver -> page.isGlobalErrorVisible());
+    Assertions.assertTrue(page.isGlobalErrorVisible());
+}
 
     @Test
     void TC_LOGIN_03_emptyEmailStaysOnLogin() {
