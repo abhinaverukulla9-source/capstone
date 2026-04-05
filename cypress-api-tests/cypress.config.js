@@ -1,3 +1,5 @@
+process.env.ALLURE_RESULTS_DIR = 'allure-results';
+
 const { defineConfig } = require('cypress');
 
 module.exports = defineConfig({
