@@ -15,7 +15,7 @@ const projects = [
   { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
   {
     name: 'Mobile Chrome',
-    use: { ...devices['Pixel 5'] },
+    use: { ...devices['Pixel 7'] },
   },
   { name: 'firefox', use: { ...devices['Desktop Firefox'] } },
 ];
@@ -24,8 +24,8 @@ module.exports = defineConfig({
   testDir: './tests',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 2 : undefined,
+  retries: process.env.CI ? 1 : 0,
+  workers: process.env.CI ? 4 : undefined,
   reporter: [
     ['list'],
     ['html', { open: 'never', outputFolder: 'playwright-report' }],
@@ -40,8 +40,7 @@ module.exports = defineConfig({
     navigationTimeout: 45_000,
   },
   projects,
-  // Skip webServer in CI since we start backend manually in GitHub Actions
-  webServer: process.env.CI
+  webServer: process.env.SKIP_WEBSERVER
     ? undefined
     : {
         command: 'node scripts/seed.js && node src/server.js',
