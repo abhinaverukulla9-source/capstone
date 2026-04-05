@@ -107,7 +107,6 @@ jobs:
           DB_PORT: 3306
           DB_NAME: findit
           DB_USER: findit
-          DB_USER: findit
           DB_PASSWORD: finditpass
 
       - name: Stop backend server
