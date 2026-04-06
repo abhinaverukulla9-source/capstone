@@ -1,3 +1,97 @@
+# name: Capstone CI
+
+# on:
+#   push:
+#     branches: [ main ]
+#   pull_request:
+#     branches: [ main ]
+
+# jobs:
+#   test:
+#     runs-on: ubuntu-latest
+
+#     services:
+#       mysql:
+#         image: mysql:8.0
+#         env:
+#           MYSQL_ROOT_PASSWORD: root
+#           MYSQL_DATABASE: findit
+#           MYSQL_USER: findit
+#           MYSQL_PASSWORD: finditpass
+#         ports:
+#           - 3306:3306
+#         options: >-
+#           --health-cmd="mysqladmin ping -h localhost"
+#           --health-interval=10s
+#           --health-timeout=5s
+#           --health-retries=5
+
+#     steps:
+
+#       - name: Checkout repository
+#         uses: actions/checkout@v4
+
+#       - name: Setup Node
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: 18
+
+#       - name: Install backend dependencies
+#         run: |
+#           cd backend
+#           npm install
+
+#       - name: Wait for MySQL
+#         run: |
+#           sudo apt-get install -y mysql-client
+#           until mysql -h127.0.0.1 -uroot -proot -e "SHOW DATABASES;"; do
+#             echo "Waiting for MySQL..."
+#             sleep 5
+#           done
+
+#       - name: Initialize Database
+#         run: |
+#           mysql -h127.0.0.1 -uroot -proot findit < database/schema.sql
+
+#       - name: Seed Database
+#         run: |
+#           cd backend
+#           npm run seed || true
+
+#       - name: Start backend server
+#         run: |
+#           cd backend
+#           npm start &
+#           sleep 10
+
+#       - name: Install Playwright
+#         run: |
+#           cd playwright-tests
+#           npm install
+#           npx playwright install
+
+#       - name: Run Playwright tests
+#         run: |
+#           cd playwright-tests
+#           npx playwright test
+
+#       - name: Install Cypress
+#         run: |
+#           cd cypress-api-tests
+#           npm install
+
+#       - name: Run Cypress tests
+#         run: |
+#           cd cypress-api-tests
+#           npx cypress run
+
+#       - name: Upload Playwright Report
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: playwright-report
+#           path: playwright-tests/playwright-report
+
+
 name: Capstone CI
 
 on:
@@ -7,6 +101,7 @@ on:
     branches: [ main ]
 
 jobs:
+
   test:
     runs-on: ubuntu-latest
 
@@ -36,55 +131,61 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install backend dependencies
-        run: |
-          cd backend
-          npm install
+      # Install MySQL client
+      - name: Install MySQL Client
+        run: sudo apt-get install -y mysql-client
 
+      # Wait until MySQL container is ready
       - name: Wait for MySQL
         run: |
-          sudo apt-get install -y mysql-client
           until mysql -h127.0.0.1 -uroot -proot -e "SHOW DATABASES;"; do
             echo "Waiting for MySQL..."
             sleep 5
           done
 
+      # Load database schema
       - name: Initialize Database
         run: |
           mysql -h127.0.0.1 -uroot -proot findit < database/schema.sql
 
+      # IMPORTANT FIX — load backend env variables for CI
+      - name: Load backend env for CI
+        run: |
+          cp backend/.env.github backend/.env
+
+      # Install backend dependencies
+      - name: Install Backend Dependencies
+        run: |
+          cd backend
+          npm install
+
+      # Seed database (demo users)
       - name: Seed Database
         run: |
           cd backend
           npm run seed || true
 
-      - name: Start backend server
+      # Start backend server
+      - name: Start Backend Server
         run: |
           cd backend
           npm start &
           sleep 10
 
+      # Install Playwright
       - name: Install Playwright
         run: |
           cd playwright-tests
           npm install
-          npx playwright install
+          npx playwright install --with-deps
 
-      - name: Run Playwright tests
+      # Run Playwright tests
+      - name: Run Playwright Tests
         run: |
           cd playwright-tests
           npx playwright test
 
-      - name: Install Cypress
-        run: |
-          cd cypress-api-tests
-          npm install
-
-      - name: Run Cypress tests
-        run: |
-          cd cypress-api-tests
-          npx cypress run
-
+      # Upload Playwright report
       - name: Upload Playwright Report
         uses: actions/upload-artifact@v4
         with:
